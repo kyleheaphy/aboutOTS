@@ -88,12 +88,27 @@
   </div>
 
   <script>
-    function expandObject(clicked) {
-      document.querySelectorAll('.object').forEach(obj => {
-        obj.classList.remove('expanded');
-      });
-      clicked.classList.add('expanded');
+  const objects = document.querySelectorAll('.object');
+
+  function expandObject(clicked) {
+    objects.forEach(obj => obj.classList.remove('expanded'));
+    clicked.classList.add('expanded');
+  }
+
+  // Close expanded view when clicking outside
+  document.addEventListener('click', function (e) {
+    if (![...objects].some(obj => obj.contains(e.target))) {
+      objects.forEach(obj => obj.classList.remove('expanded'));
     }
-  </script>
+  });
+
+  // Stop event from bubbling up when clicking on an object
+  objects.forEach(obj => {
+    obj.addEventListener('click', function (e) {
+      e.stopPropagation(); // Prevent document click
+      expandObject(obj);
+    });
+  });
+</script>
 </body>
 </html>
