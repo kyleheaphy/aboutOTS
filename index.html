@@ -3,26 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aboutOTS</title>
+  <title>Optimus Testing Solution</title>
   <style>
     * {
       box-sizing: border-box;
     }
     body {
-      font-family: Yu Gothic UI;
+      font-family: "Yu Gothic UI", sans-serif;
       margin: 0;
       padding: 20px;
       background: #004681;
+      color: #000;
     }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
     .container {
       display: flex;
-      gap: 20px;
+      flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
+      gap: 20px;
     }
+
     .object {
-      flex: 1;
-      transition: all 0.5s ease;
+      flex: 1 1 20rem;
+      min-width: 20rem;
+      max-width: 20rem;
+      height: 15rem;
+      transition: max-width 0.4s ease, height 0.4s ease, transform 0.4s ease;
+      will-change: max-width, height, transform;
       padding: 10px;
       background: white;
       border: 1px solid #ccc;
@@ -30,55 +43,75 @@
       text-align: center;
       cursor: pointer;
       overflow: hidden;
-      transform-origin: top left; /* NEW: sets growth direction */
+      position: relative;
+      z-index: 0;
     }
+
     .object > h2 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
+      margin: 0;
     }
 
     .object ul {
-      font-size: 1.7rem;
+      font-size: 1.2rem;
       list-style-type: none;
+      padding: 0;
+      margin: 0;
     }
 
     .object.expanded {
-      flex: 2;
+      max-width: 100%;
+      height: 30rem;
       background: #e0f7fa;
-      transform: scale(0.5) 
-      z-index: 1; /* Keeps it above others */
+      transform: translateY(-10px);
+      z-index: 1;
     }
+
+    .container.expanding .object:not(.expanded) {
+      flex: 1 1 10rem;
+      max-width: 10rem;
+      height: 8rem;
+    }
+
+    /* Animate detail visibility */
     .details {
-      display: none;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
       margin-top: 10px;
     }
+
     .object.expanded .details {
-      display: block;
+      max-height: 1000px; /* large enough to show all content */
+      opacity: 1;
     }
+
     img {
       max-width: 100%;
       height: auto;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Interactive Object Viewer</h1>
+  <h1>Optimus Testing Solution</h1>
   <div class="container" id="objectContainer">
     <div class="object" onclick="expandObject(this)">
       <h2>What Is It?</h2>
       <div class="details">
-        <img src="https://via.placeholder.com/150" alt="Image 1">
+        <img src="assets/image.png" alt="Image 1" />
         <ul>
           <li>Collection of integrated applications</li>
           <li>Designed to support software testing</li>
-          <li>Covers E2E testing lifecycle </li>
+          <li>Covers E2E testing lifecycle</li>
         </ul>
       </div>
     </div>
     <div class="object" onclick="expandObject(this)">
       <h2>Who Makes It?</h2>
       <div class="details">
-        <img src="https://via.placeholder.com/150" alt="Image 2">
+        <img src="https://via.placeholder.com/150" alt="Image 2" />
         <ul>
           <li>Qase</li>
           <li>PowerBI</li>
@@ -99,71 +132,68 @@
         </ul>
       </div>
     </div>
-  </div>
-  
-  
-  <div class="container" id="objectContainer2" style="margin-top: 20px;">
-  <div class="object">
-    <h2>Who Uses It?</h2>
-    <div class="details">
-      <ul>
-        <li>Supply & Trading Organization</li>
-        <li>Consultancies</li>
-        <li>Financial Trading Org</li>
-        <li>Software Developer</li>
-      </ul>
+    <div class="object" onclick="expandObject(this)">
+      <h2>Who Uses It?</h2>
+      <div class="details">
+        <ul>
+          <li>Supply & Trading Organization</li>
+          <li>Consultancies</li>
+          <li>Financial Trading Org</li>
+          <li>Software Developer</li>
+        </ul>
+      </div>
+    </div>
+    <div class="object" onclick="expandObject(this)">
+      <h2>Competition</h2>
+      <div class="details">
+        <ul>
+          <li>Client-built solutions (e.g., Excel)</li>
+          <li>TestRail</li>
+          <li>Selenium</li>
+        </ul>
+      </div>
+    </div>
+    <div class="object" onclick="expandObject(this)">
+      <h2>Elevator Pitch</h2>
+      <div class="details">
+        <ul>
+          <li>
+            OTS is a one-stop shop for software testing. It helps ensure accuracy,
+            completeness, efficiency, and awareness by integrating best-in-class
+            tools. OTS is lightweight, fast to deploy, and scales to any project size.
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="object">
-    <h2>Competition</h2>
-    <div class="details">
-      <ul>
-        <li>Our Client's ability to develop their own testing solution, or continue with excel</li>
-        <li>TestRail</li>
-        <li>Selenium - automated testing</li>
-        
-      </ul>
-    </div>
-  </div>
-  <div class="object">
-    <h2>Elevator Pitch</h2>
-    <div class="details">
-      <ul>
-        <li>-	OTS is a one-stop shop for software testing. The key drivers of successful testing efforts are accuracy, completeness, efficiency and awareness. 
-          You can hit each one of these with Optimus Testing Solution’s integration of industry leading tools. 
-          No matter the size of your project – OTS is lightweight and quick to integrate (a matter of days, not weeks).</li>
-      </ul>
-    </div>
-  </div>
-</div>
 
-<script>
-  function setupRow(containerSelector) {
-    const container = document.querySelector(containerSelector);
-    const objects = container.querySelectorAll('.object');
+  <script>
+    function setupRow(containerSelector) {
+      const container = document.querySelector(containerSelector);
+      const objects = container.querySelectorAll(".object");
 
-    function expandObject(clicked) {
-      objects.forEach(obj => obj.classList.remove('expanded'));
-      clicked.classList.add('expanded');
+      function expandObject(clicked) {
+        objects.forEach((obj) => obj.classList.remove("expanded"));
+        clicked.classList.add("expanded");
+        container.classList.add("expanding");
+      }
+
+      document.addEventListener("click", function (e) {
+        if (![...objects].some((obj) => obj.contains(e.target))) {
+          objects.forEach((obj) => obj.classList.remove("expanded"));
+          container.classList.remove("expanding");
+        }
+      });
+
+      objects.forEach((obj) => {
+        obj.addEventListener("click", function (e) {
+          e.stopPropagation();
+          expandObject(obj);
+        });
+      });
     }
 
-    // Collapse when clicking outside this container
-    document.addEventListener('click', function (e) {
-      if (![...objects].some(obj => obj.contains(e.target))) {
-        objects.forEach(obj => obj.classList.remove('expanded'));
-      }
-    });
-
-    objects.forEach(obj => {
-      obj.addEventListener('click', function (e) {
-        e.stopPropagation();
-        expandObject(obj);
-      });
-    });
-  }
-
-  setupRow('#objectContainer');  // First row
-  setupRow('#objectContainer2'); // Second row
-</script>
+    setupRow("#objectContainer");
+  </script>
 </body>
 </html>
