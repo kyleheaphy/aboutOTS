@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive Objects</title>
+  <title>aboutOTS</title>
   <style>
     * {
       box-sizing: border-box;
     }
     body {
-      font-family: Arial, sans-serif;
+      font-family: Yu Gothic UI;
       margin: 0;
       padding: 20px;
-      background: #f4f4f4;
+      background: #004681;
     }
     .container {
       display: flex;
-      gap: 10px;
+      gap: 20px;
       justify-content: center;
       align-items: center;
     }
     .object {
       flex: 1;
-      transition: all 0.3s ease;
+      transition: all 0.5s ease;
       padding: 10px;
       background: white;
       border: 1px solid #ccc;
@@ -30,10 +30,21 @@
       text-align: center;
       cursor: pointer;
       overflow: hidden;
+      transform-origin: top left; /* NEW: sets growth direction */
     }
+    .object h2 {
+      font-size: 1.5rem;
+    }
+
+    .object ul {
+      font-size: 1.1rem;
+    }
+
     .object.expanded {
-      flex: 3;
+      flex: 2;
       background: #e0f7fa;
+      transform: scale(0.5) 
+      z-index: 1; /* Keeps it above others */
     }
     .details {
       display: none;
@@ -53,62 +64,104 @@
   <h1>Interactive Object Viewer</h1>
   <div class="container" id="objectContainer">
     <div class="object" onclick="expandObject(this)">
-      <h2>What is it?</h2>
+      <h2>What Is It?</h2>
       <div class="details">
         <img src="https://via.placeholder.com/150" alt="Image 1">
         <ul>
-          <li> - Collection of integrated applications</li>
-          <li> - Designed to support software testing</li>
-          <li> - Covers E2E testing lifecycle </li>
+          <li>Collection of integrated applications <img src="https://via.placeholder.com/150" alt="Image 1"></li>
+          <li>Designed to support software testing</li>
+          <li>Covers E2E testing lifecycle </li>
         </ul>
       </div>
     </div>
     <div class="object" onclick="expandObject(this)">
-      <h2>Object 2</h2>
+      <h2>Who Makes It?</h2>
       <div class="details">
         <img src="https://via.placeholder.com/150" alt="Image 2">
         <ul>
-          <li>Detail B1</li>
-          <li>Detail B2</li>
-          <li>Detail B3</li>
+          <li>Qase</li>
+          <li>PowerBI</li>
+          <li>Jira</li>
+          <li>GitHub</li>
         </ul>
       </div>
     </div>
     <div class="object" onclick="expandObject(this)">
-      <h2>Object 3</h2>
+      <h2>What Does It Solve?</h2>
       <div class="details">
-        <img src="https://via.placeholder.com/150" alt="Image 3">
         <ul>
-          <li>Detail C1</li>
-          <li>Detail C2</li>
-          <li>Detail C3</li>
+          <li>Software Testing Inefficiencies</li>
+          <li>Disorganization and Poor Management</li>
+          <li>Documentation and Audit</li>
+          <li>Workflow Controls</li>
+          <li>Reporting</li>
         </ul>
       </div>
     </div>
   </div>
+  
+  
+  <div class="container" id="objectContainer2" style="margin-top: 20px;">
+  <div class="object">
+    <h2>Who Uses It?</h2>
+    <div class="details">
+      <ul>
+        <li>Supply & Trading Organization</li>
+        <li>Consultancies</li>
+        <li>Financial Trading Org</li>
+        <li>Software Developer</li>
+      </ul>
+    </div>
+  </div>
+  <div class="object">
+    <h2>Competition</h2>
+    <div class="details">
+      <ul>
+        <li>Detail E1</li>
+        <li>Detail E2</li>
+        <li>Detail E3</li>
+      </ul>
+    </div>
+  </div>
+  <div class="object">
+    <h2>Elevator Pitch</h2>
+    <div class="details">
+      <ul>
+        <li>-	OTS is a one-stop shop for software testing. The key drivers of successful testing efforts are accuracy, completeness, efficiency and awareness. 
+          You can hit each one of these with Optimus Testing Solution’s integration of industry leading tools. 
+          No matter the size of your project – OTS is lightweight and quick to integrate (a matter of days, not weeks).</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-  <script>
-  const objects = document.querySelectorAll('.object');
+<script>
+  function setupRow(containerSelector) {
+    const container = document.querySelector(containerSelector);
+    const objects = container.querySelectorAll('.object');
 
-  function expandObject(clicked) {
-    objects.forEach(obj => obj.classList.remove('expanded'));
-    clicked.classList.add('expanded');
+    function expandObject(clicked) {
+      objects.forEach(obj => obj.classList.remove('expanded'));
+      clicked.classList.add('expanded');
+    }
+
+    // Collapse when clicking outside this container
+    document.addEventListener('click', function (e) {
+      if (![...objects].some(obj => obj.contains(e.target))) {
+        objects.forEach(obj => obj.classList.remove('expanded'));
+      }
+    });
+
+    objects.forEach(obj => {
+      obj.addEventListener('click', function (e) {
+        e.stopPropagation();
+        expandObject(obj);
+      });
+    });
   }
 
-  // Close expanded view when clicking outside
-  document.addEventListener('click', function (e) {
-    if (![...objects].some(obj => obj.contains(e.target))) {
-      objects.forEach(obj => obj.classList.remove('expanded'));
-    }
-  });
-
-  // Stop event from bubbling up when clicking on an object
-  objects.forEach(obj => {
-    obj.addEventListener('click', function (e) {
-      e.stopPropagation(); // Prevent document click
-      expandObject(obj);
-    });
-  });
+  setupRow('#objectContainer');  // First row
+  setupRow('#objectContainer2'); // Second row
 </script>
 </body>
 </html>
